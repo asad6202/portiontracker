@@ -124,6 +124,6 @@ exports.handler = async (event) => {
 
   } catch (err) {
     console.error('[analyze-meal-photo] Error:', err.message);
-    return { statusCode: 502, headers, body: JSON.stringify({ error: 'AI analysis failed. Please try again.' }) };
+    return { statusCode: 502, headers, body: JSON.stringify({ error: 'AI analysis failed. Please try again.', detail: err.message }) };
   }
 };
