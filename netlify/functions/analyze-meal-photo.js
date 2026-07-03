@@ -22,9 +22,12 @@ FOOD GROUP RULES — classify every food item into exactly one group:
 
 "water": Plain water, herbal tea, sparkling water. NOT juice, soda, or other drinks.
 
+"alcohol": Beer, wine, spirits, cocktails, champagne, cider, sake, liqueur. Each standard drink = 1 portion (355ml beer, 150ml wine, 45ml spirits).
+
 IMPORTANT:
 - Mango → always "fruits", never "veggies"
 - Avocado → always "fats", never "veggies"
+- Beer/wine/spirits → always "alcohol", never "water"
 - Count 0 for any food group not visible
 - Each palm-sized serving = 1 portion
 
@@ -38,7 +41,8 @@ Respond ONLY with valid JSON in this exact format:
     "wholeGrains": 0,
     "nutsSeeds": 0,
     "fats": 0,
-    "water": 0
+    "water": 0,
+    "alcohol": 0
   }
 }`;
 
