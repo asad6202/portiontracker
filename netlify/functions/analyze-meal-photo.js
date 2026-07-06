@@ -46,13 +46,17 @@ Respond ONLY with valid JSON in this exact format:
   }
 }`;
 
-function callOpenAI(imageBase64, apiKey) {
+function callOpenAI(imageBase64, apiKey, language = 'en') {
+  const languageInstruction = language !== 'en'
+    ? `\nIMPORTANT: Write the "description" field in ${language === 'es' ? 'Spanish' : language}. All other fields remain as structured JSON.`
+    : '';
+
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
       model: 'gpt-4o',
       max_tokens: 500,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: SYSTEM_PROMPT + languageInstruction },
         {
           role: 'user',
           content: [
@@ -113,7 +117,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { imageBase64 } = JSON.parse(event.body || '{}');
+    const { imageBase64, language = 'en' } = JSON.parse(event.body || '{}');
     if (!imageBase64) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'imageBase64 is required' }) };
     }
@@ -123,7 +127,7 @@ exports.handler = async (event) => {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'OpenAI API key not configured' }) };
     }
 
-    const result = await callOpenAI(imageBase64, apiKey);
+    const result = await callOpenAI(imageBase64, apiKey, language);
     return { statusCode: 200, headers, body: JSON.stringify(result) };
 
   } catch (err) {
