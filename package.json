@@ -1,5 +1,9 @@
 {
   "name": "portion-track-backend",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2"
+  }
 }

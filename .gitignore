@@ -1,7 +1,7 @@
 node_modules
 dist
-.env
 *.db
 *.db-shm
 *.db-wal
 pglite-data
+config.bat
