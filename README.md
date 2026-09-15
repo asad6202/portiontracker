@@ -1,40 +1,27 @@
 ## Getting Started
 
-**1. Create a GitHub Personal Access Token:**
-- Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)
-- Generate a token with `read:packages` scope
+This backend exposes a meal-photo analysis API (the Netlify function in `netlify/functions/analyze-meal-photo.js`).
 
-**2. Set the token and install:**
+**1. Copy environment variables:**
 ```bash
-export NPM_TOKEN=<your-token>
+cp .env.example .env
+```
+
+Add your OpenAI API key to `.env`:
+```
+OPENAI_API_KEY=sk-...
+PORT=4000
+```
+
+**2. Install and run:**
+```bash
 npm install
 npm run dev
 ```
 
-**Important:** Never commit your token. Use environment variables locally or secure secrets in CI/CD.
+The API listens on `http://localhost:4000`.
 
-## Database
+- `GET /health` — liveness check
+- `POST /analyze-meal-photo` — send `{ "imageBase64": "...", "language": "en" }`
 
-This template uses Neon (Postgres) for the database.
-
-**After editing `src/db/schema.ts`, push your changes:**
-```bash
-npm run db:push
-```
-
-This command generates migration files and applies them to the database.
-
-**Or run steps separately:**
-```bash
-# Generate migration files
-npm run db:generate
-
-# Apply migrations
-npm run db:migrate
-```
-
-## Customization
-
-- Add your API endpoints in `src/index.ts`
-- Define your database schema in `src/db/schema.ts`
-- Generate and apply migrations as needed
+The same function is deployed on Netlify as `/.netlify/functions/analyze-meal-photo`.
